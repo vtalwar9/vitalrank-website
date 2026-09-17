@@ -1,0 +1,21 @@
+# Netlify deploy settings for the ViTalRank static site.
+# The build step regenerates HTML from content/** (Decap CMS at /admin/),
+# then publishes the site root.
+
+[build]
+  command = "python3 build.py"
+  publish = "."
+
+[functions]
+  directory = "netlify/functions"
+
+# Decap CMS GitHub OAuth endpoints (proxied to the functions above).
+[[redirects]]
+  from = "/api/auth"
+  to = "/.netlify/functions/gh-auth"
+  status = 200
+
+[[redirects]]
+  from = "/api/callback"
+  to = "/.netlify/functions/gh-callback"
+  status = 200

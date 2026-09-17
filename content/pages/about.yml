@@ -1,0 +1,64 @@
+seo_title: About Us | ViTalRank | AI-Driven SEO & Digital Services
+meta_description: Learn about ViTalRank — our journey, values, approach, and the team
+  of SEO experts behind 20 years of digital growth.
+og_title: About Us | ViTalRank
+og_description: Learn about ViTalRank — our journey, values, approach, and the team
+  of SEO experts.
+hero_title: About Us
+hero_subtitle: Our journey, values, and the team behind ViTalRank.
+hero_image: /assets/img/about-hero.jpg
+hero_image_alt: ViTalRank team collaborating around laptops
+journey_label: Our journey
+journey_title: It started with a simple but powerful idea
+journey_text: Over the years, we have grown from a small team of consultants to a
+  leading consulting firm, proudly serving clients across various industries and geographies.
+signature_image: /assets/img/about-signature.png
+signature_image_alt: Signature
+values_title: Our values
+values_text: At the heart of Consulting are our core values – integrity, excellence,
+  collaboration, and innovation. These values guide everything we do, from the way
+  we interact with clients and colleagues to the solutions we deliver.
+approach_title: Our approach
+approach_text: We believe in taking the time to understand our clients' needs, challenges,
+  and objectives, and developing solutions that deliver tangible results. We work
+  hand-in-hand with our clients every step of the way to ensure success.
+office_image: /assets/img/about-office.jpg
+office_image_alt: ViTalRank main office
+stats:
+- num: '20'
+  label: Years of activity
+- num: 10k
+  label: Happy customers
+- num: '5'
+  label: Awards won
+- num: '87'
+  label: Employees
+team_label: Our team
+team_title: Meet our team of experts
+team_text: Our greatest asset is our team of dedicated consultants, who bring a wealth
+  of expertise and passion to every project.
+team:
+- image: /assets/img/about-team-john-smith.jpg
+  image_alt: John Smith
+  name: John Smith
+  role: Chief Technology Officer
+- image: /assets/img/about-team-david-martinez.jpg
+  image_alt: David Martinez
+  name: David Martinez
+  role: Chief Operating Officer
+- image: /assets/img/home-journey-banner.jpg
+  image_alt: Mark Rodriguez
+  name: Mark Rodriguez
+  role: Founder & CEO
+- image: /assets/img/about-team-alex-wilson.jpg
+  image_alt: Alex Wilson
+  name: Alex Wilson
+  role: Chief Marketing Officer
+- image: /assets/img/about-team-ryan-johnson.jpg
+  image_alt: Ryan Johnson
+  name: Ryan Johnson
+  role: Chief Financial Officer
+- image: /assets/img/service-card-ecommerce-seo.jpg
+  image_alt: Michael Lewis
+  name: Michael Lewis
+  role: Managing Director

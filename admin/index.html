@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Content Manager — ViTalRank</title>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+</head>
+<body>
+<div id="cms-loading" style="font-family:system-ui,sans-serif;padding:40px;text-align:center;color:#666">Loading content manager…</div>
+<script>
+window.CMS_MANUAL_INIT = true;
+</script>
+<script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+<script>
+// Always fetch a fresh CMS config (bypass browser cache) so newly added
+// editable fields appear immediately after a site update.
+fetch('config.json', { cache: 'no-store' })
+  .then(function (r) { if (!r.ok) throw new Error('config request failed'); return r.json(); })
+  .then(function (config) {
+    document.getElementById('cms-loading').remove();
+    // Tell Decap not to fetch config.yml as well: it deep-merges the two
+    // configs (concatenating the collections arrays), which fails validation
+    // with "collections names must be unique".
+    config.load_config_file = false;
+    CMS.init({ config: config });
+  })
+  .catch(function () {
+    document.getElementById('cms-loading').textContent =
+      'Could not load the content manager. Please refresh the page and try again.';
+  });
+</script>
+</body>
+</html>
