@@ -1,0 +1,146 @@
+seo_title: ViTalRank | AI-Driven SEO & Digital Services
+meta_description: ViTalRank is your trusted partner for advanced SEO consulting services,
+  AI-driven SEO strategies, and digital growth solutions. Improve search rankings,
+  drive targeted traffic, and maximize ROI.
+og_title: ViTalRank | AI-Driven SEO & Digital Services
+og_description: Advanced SEO consulting services, AI-driven SEO strategies, and digital
+  growth solutions.
+hero_title: AI-Driven SEO & Digital Services
+hero_subtitle: ViTalRank is your trusted partner for advanced SEO consulting services,
+  AI-driven SEO strategies, and digital growth solutions. We help businesses improve
+  search rankings, drive targeted traffic, and maximize ROI using data driven SEO,
+  GEO optimization, AEO, and AI led strategies built for modern search engines.
+hero_image: /assets/img/home-hero.jpg
+hero_image_alt: ViTalRank team standing together in front of an SEO analytics dashboard
+hero_btn1: Contact Us
+hero_btn2: Our services
+client_logos:
+- name: Horizon
+  icon: <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="9"
+    fill="none" stroke="currentColor" stroke-width="2.5"/></svg>
+- name: GreatAI
+  icon: <svg viewBox="0 0 24 24" fill="currentColor"><rect x="4" y="4" width="7" height="7"
+    rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13"
+    width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/></svg>
+- name: Hexagon
+  icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path
+    d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"/></svg>
+- name: CloudTech
+  icon: <svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 18a5 5 0 1 1 .8-9.92A6
+    6 0 0 1 19 10a4 4 0 0 1-.5 7.94z"/></svg>
+- name: StartUp
+  icon: <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="9"/><circle
+    cx="12" cy="12" r="3.5" fill="#0e1626"/></svg>
+services_label: Our services
+services_title: Boost Your Online Visibility with ViTalRank
+services_intro: We provide comprehensive **SEO consulting services** to help your
+  business grow organically. From audits to strategy planning, our team ensures your
+  website performs at its best in search results.
+service_cards:
+- css_class: photo-card tall
+  url: /services/seo-consulting-services/
+  image: /assets/img/home-service-card-seo-consulting.jpg
+  image_alt: SEO consulting session
+  title: SEO Consulting Services for Growth
+- css_class: photo-card
+  url: /services/technical-seo-services/
+  image: /assets/img/home-service-card-technical-seo.jpg
+  image_alt: Technical SEO planning on a whiteboard
+  title: Technical SEO Services & Audits
+- css_class: photo-card
+  url: /services/enterprise-seo-services-for-large-sites/
+  image: /assets/img/home-service-card-enterprise-seo.jpg
+  image_alt: Enterprise SEO consultation
+  title: Enterprise SEO Services for Large Sites
+custom_cta_title: Need customized services?
+custom_cta_btn: Request a personalized service
+approach_image: /assets/img/home-journey-banner.jpg
+approach_image_alt: Two business consultants shaking hands across a table
+approach_fc_label: Sales this month
+approach_fc_value: +30%
+approach_label: Our approach
+approach_title: Innovative approach to consulting
+approach_lead: At ViTalRank, SEO is not guesswork. We combine human expertise with
+  AI powered analysis to create strategies aligned with search intent, algorithms,
+  and business outcomes. Every decision is backed by data, testing, and continuous
+  optimization.
+approach_points:
+- text: We believe in fostering long-term partnerships
+- text: We develop actionable plans to achieve your goals
+banner_image: /assets/img/home-journey-banner.jpg
+banner_image_alt: Business partners shaking hands over signed documents
+banner_title: Our journey began 20 years ago
+banner_link: Read our story
+why_label: Why choose us
+why_title: We strive to deliver value to our clients
+why_lead: ViTalRank partners with growth focused businesses that want more than rankings.
+  We deliver intelligent, scalable SEO strategies designed for long term visibility
+  and real business impact.
+why_cards:
+- url: /about-us/
+  icon: <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+    stroke-width="1.8"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"/><path
+    d="M19 15l.9 2.1L22 18l-2.1.9L19 21l-.9-2.1L16 18l2.1-.9z"/></svg>
+  title: AI Powered SEO
+  text: We blend advanced AI insights with hands on SEO expertise to drive smarter
+    optimization.
+  link_text: Our track record
+- url: /about-us/
+  icon: <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+    stroke-width="1.8"><path d="M4 20V10M10 20V4M16 20v-8M22 20H2"/></svg>
+  title: Data Driven Decisions
+  text: Every SEO action is guided by analytics, intent signals, and performance insights.
+  link_text: Our process
+- url: /about-us/
+  icon: <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+    stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>
+  title: Future Ready Execution
+  text: Our SEO strategies are built for modern search, including GEO, AEO, and AI
+    driven results.
+  link_text: Our solutions
+process_title: Our process
+process_text: We developed an innovative and flexible process that allows us to understand
+  your business better
+process_btn: Learn more
+process_steps:
+- url: /about-us/
+  num: '01.'
+  title: Discover
+  text: We analyze your website, competitors, keywords, and search landscape to uncover
+    growth opportunities and technical gaps.
+- url: /about-us/
+  num: '03.'
+  title: Optimize
+  text: We implement on page, technical, content, and GEO optimizations to improve
+    visibility, rankings, and conversions.
+- url: /about-us/
+  num: '02.'
+  title: Strategize
+  text: A customized SEO plan is built using AI insights, intent mapping, and realistic
+    forecasting aligned with your business goals.
+- url: /about-us/
+  num: '04.'
+  title: Scale
+  text: We refine strategies, track performance, and scale what works using continuous
+    testing and AI driven improvements.
+commit_image: /assets/img/home-commitment.jpg
+commit_image_alt: Businessman adjusting his cuff
+commit_fc1_value: 30%
+commit_fc1_label: Growth measured
+commit_fc2_value: 25%
+commit_fc2_label: Cost savings
+commit_label: Our commitment
+commit_title: Real Results. Ethical SEO. Long Term Growth.
+commit_lead: ViTalRank is committed to delivering sustainable SEO growth using ethical,
+  future ready strategies. We focus on quality, transparency, and measurable impact,
+  ensuring your brand stays visible across traditional search, AI answers, and evolving
+  search experiences.
+commit_btn: Request an audit
+testi_label: Testimonials
+testi_title: Trusted by 10k+ customers
+testi_text: Whether you're a small startup or a multinational corporation, let us
+  be your trusted advisor on the path to success.
+blog_label: Our blog
+blog_title: Explore insights and stay ahead
+blog_lead: Our blog features insights from our team of consultants, who share their
+  best practices on a wide range of topics.

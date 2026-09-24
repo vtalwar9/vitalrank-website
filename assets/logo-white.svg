@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 176 40" role="img" aria-label="ViTalRank">
+  <g fill="#FFFFFF">
+    <rect x="2" y="8" width="13" height="13" rx="3.5"/>
+    <rect x="17" y="8" width="13" height="13" rx="3.5"/>
+    <rect x="2" y="23" width="13" height="13" rx="3.5"/>
+    <rect x="17" y="23" width="13" height="13" rx="3.5"/>
+  </g>
+  <text x="38" y="28" font-family="Figtree, 'Segoe UI', sans-serif" font-weight="600" font-size="23" fill="#FFFFFF" letter-spacing="-0.5">ViTalRank</text>
+</svg>

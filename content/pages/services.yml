@@ -1,0 +1,39 @@
+seo_title: Services | ViTalRank | AI-Driven SEO & Digital Services
+meta_description: 'Explore ViTalRank''s SEO services: SEO consulting, technical SEO
+  audits, enterprise SEO, B2B SEO, local SEO, and ecommerce SEO.'
+og_title: Services | ViTalRank
+og_description: Explore ViTalRank's SEO services — consulting, technical, enterprise,
+  B2B, local, and ecommerce SEO.
+hero_title: Services
+hero_subtitle: Comprehensive SEO services to help your business grow organically.
+hero_image: /assets/img/services-hero.jpg
+hero_image_alt: Consultant writing on a whiteboard
+services_label: Our services
+services_title: We offer a wide range of services
+services_intro: By combining our industry knowledge with cutting-edge tools and methodologies,
+  we develop strategies that drive measurable results.
+service_cards:
+- url: /services/seo-consulting-services/
+  image: /assets/img/home-service-card-seo-consulting.jpg
+  image_alt: SEO consulting session
+  title: SEO Consulting Services for Growth
+- url: /services/technical-seo-services/
+  image: /assets/img/home-service-card-technical-seo.jpg
+  image_alt: Technical SEO planning on a whiteboard
+  title: Technical SEO Services & Audits
+- url: /services/enterprise-seo-services-for-large-sites/
+  image: /assets/img/home-service-card-enterprise-seo.jpg
+  image_alt: Enterprise SEO consultation
+  title: Enterprise SEO Services for Large Sites
+- url: /services/b2b-seo-services/
+  image: /assets/img/service-card-b2b-seo.jpg
+  image_alt: B2B SEO strategy meeting
+  title: B2B SEO Services & Consulting
+- url: /services/local-seo-services/
+  image: /assets/img/service-card-local-seo.jpg
+  image_alt: Local SEO for businesses
+  title: Local SEO Services for Businesses
+- url: /services/ecommerce-seo-services/
+  image: /assets/img/service-card-ecommerce-seo.jpg
+  image_alt: Ecommerce SEO optimization
+  title: Ecommerce SEO Services That Convert
