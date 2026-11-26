@@ -15,5 +15,5 @@ form_name_ph: Your name
 form_email_ph: Your email
 form_msg_ph: How can we help?
 form_button: Send message
-form_note: Thanks for reaching out! This demo form isn’t connected to an inbox yet,
-  so your message wasn’t sent.
+form_note: Thanks for reaching out! Your message has been sent — we'll get back
+  to you soon.

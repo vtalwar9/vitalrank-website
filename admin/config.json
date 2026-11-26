@@ -3,7 +3,7 @@
   "name": "github",
   "repo": "vtalwar9/vitalrank-website",
   "branch": "main",
-  "base_url": "https://vitalrank.netlify.app",
+  "base_url": "https://www.vitalrankdigital.com",
   "auth_endpoint": "api/auth"
  },
  "media_folder": "assets/img",

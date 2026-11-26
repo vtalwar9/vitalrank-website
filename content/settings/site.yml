@@ -49,15 +49,22 @@ footer_col2:
   label: Blog
 - url: /contact/
   label: Contact
-- url: /404/
-  label: '404'
 footer_col3_title: Services
 footer_col3:
 - url: /services/seo-consulting-services/
-  label: Market research
+  label: SEO Consulting Services for Growth
 - url: /services/technical-seo-services/
-  label: Strategic planning
+  label: Technical SEO Services & Audits
 - url: /services/enterprise-seo-services-for-large-sites/
-  label: Financial advisory
+  label: Enterprise SEO Services for Large Sites
+- url: /services/local-seo-services/
+  label: Local SEO Services for Businesses
+- url: /services/ecommerce-seo-services/
+  label: Ecommerce SEO Services That Convert
+- url: /services/b2b-seo-services/
+  label: B2B SEO Services & Consulting
 footer_copyright: © 2026 ViTalRank. All rights reserved.
-contact_info: []
+contact_info:
+- label: Email
+  text: vishesh@vitalrankdigital.com
+  href: mailto:vishesh@vitalrankdigital.com

@@ -13,6 +13,11 @@ Content model:
 Marker syntax inside the HTML templates (markers are preserved in the output,
 so builds are idempotent):
   <!-- cms:s:key -->...<!-- /cms -->    short string (HTML-escaped)
+  <!-- cms:a:key:attr -->...whole element...<!-- /cms -->  one attribute (attr="value")
+  of the wrapped element is rewritten from the CMS value; the comments must
+  stay OUTSIDE the tag or browsers leak the markup as visible text;
+                                        the marker sits OUTSIDE the attribute so
+                                        placeholders etc. render clean text
   <!-- cms:t:key -->...<!-- /cms -->    long text (HTML-escaped)
   <!-- cms:m:key -->...<!-- /cms -->    markdown block -> HTML
   <!-- cms:m:key:dots -->...<!-- /cms -->  markdown, <ul> gets class="dots"
@@ -30,8 +35,8 @@ Key prefixes:  site.*       -> content/settings/site.yml
                anything else -> the page's own content file
                (service markdown body is addressable as key "body")
 """
-import re, glob, os, html as htmlmod
-from datetime import datetime
+import re, glob, os, html as htmlmod, json
+from datetime import datetime, date
 
 try:
     import yaml
@@ -49,6 +54,7 @@ CHROME_HEADER = """
       <a href="/about-us/"><!-- cms:s:site.nav_about -->About<!-- /cms --></a>
       <a href="/services/"><!-- cms:s:site.nav_services -->Services<!-- /cms --></a>
       <a href="/blog/"><!-- cms:s:site.nav_blog -->Blog<!-- /cms --></a>
+      <a href="/contact/" class="nav-contact-link"><!-- cms:s:site.nav_contact -->Contact<!-- /cms --></a>
     </nav>
     <a class="btn btn-outline-d" href="/contact/"><!-- cms:s:site.nav_contact -->Contact<!-- /cms --></a>
     <button class="nav-toggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
@@ -128,9 +134,12 @@ def inject_chrome(html, sdata, posts):
         html = html.replace("<!-- chrome:header -->", header_html)
     elif '<header class="site-header">' in html:
         # chrome was injected by an earlier build: re-render in place so
-        # template changes propagate on rebuild (markers stay idempotent)
-        html = re.sub(r'<header class="site-header">.*?</header>',
-                      lambda m: header_html, html, count=1, flags=re.S)
+        # template changes propagate on rebuild (markers stay idempotent).
+        # Surrounding blank lines are swallowed so rebuilds don't
+        # accumulate whitespace.
+        html = re.sub(r'\n*<header class="site-header">.*?</header>\n*',
+                      lambda m: '\n' + header_html.strip('\n') + '\n',
+                      html, count=1, flags=re.S)
     if "<!-- chrome:cta_footer -->" in html:
         html = html.replace("<!-- chrome:cta_footer -->", footer_html)
     else:
@@ -141,7 +150,11 @@ def inject_chrome(html, sdata, posts):
         if si != -1:
             band_start = html.rfind('<div class="band" style="padding-bottom:24px">', 0, si)
             if band_start != -1 and 'site-footer' in html[band_start:si]:
-                html = html[:band_start] + footer_html + html[si:]
+                # swallow preceding blank lines so rebuilds stay byte-stable
+                bs = band_start
+                while bs > 0 and html[bs - 1] == '\n':
+                    bs -= 1
+                html = html[:bs] + '\n' + footer_html.strip('\n') + '\n' + html[si:]
     return html
 
 
@@ -286,7 +299,7 @@ def md_to_html(md, ul_class=None):
 # CMS marker engine
 # ----------------------------------------------------------------------------
 CMS_RE = re.compile(
-    r'<!--\s*cms:(s|t|m|mi|h|img|list|posts):([A-Za-z0-9_.:]+?)\s*-->(.*?)<!--\s*/cms\s*-->',
+    r'<!--\s*cms:(s|t|m|mi|h|img|list|posts|a):([A-Za-z0-9_.:]+?)\s*-->(.*?)<!--\s*/cms\s*-->',
     re.S)
 TPL_RE = re.compile(r'<template>(.*?)</template>', re.S)
 
@@ -408,6 +421,20 @@ def apply_markers(html, page_data, sdata, posts):
             rendered = list_render(val)
             return rendered if rendered is not None else m.group(0)
 
+        if kind == 'a':
+            # element-attribute marker: the comments wrap the WHOLE element,
+            # e.g. <!-- cms:a:form_name_ph:placeholder --><input ... placeholder="Your name" ...><!-- /cms -->
+            # Comments must never sit inside a tag: browsers end the tag at
+            # the first ">" inside the comment and leak the rest as visible
+            # text. Here we rewrite the named attribute's value in place.
+            if val is None:
+                return m.group(0)
+            new_inner = re.sub(
+                r'(%s\s*=\s*")([^"]*)(")' % re.escape(opt),
+                lambda am: am.group(1) + htmlmod.escape(str(val).strip(), quote=True) + am.group(3),
+                inner, count=1)
+            return open_c + new_inner + close_c
+
         if val is None:
             return m.group(0)
         if kind in ('s', 't'):
@@ -441,6 +468,44 @@ def apply_markers(html, page_data, sdata, posts):
     return CMS_RE.sub(rep, html)
 
 
+def apply_head_tags(html, path, data, og_image=None, og_type='website'):
+    """Insert canonical + complete Open Graph / Twitter share tags.
+
+    Any existing canonical/og:/twitter: tags are stripped first, so the
+    block is complete and idempotent across rebuilds.
+    """
+    data = data or {}
+    html = re.sub(r'<link rel="canonical"[^>]*>\n?', '', html)
+    html = re.sub(r'<meta property="og:[^>]*>\n?', '', html)
+    html = re.sub(r'<meta name="twitter:[^>]*>\n?', '', html)
+    title = data.get('og_title') or data.get('seo_title') or data.get('title') or 'ViTalRank'
+    desc = (data.get('og_description') or data.get('meta_description')
+            or data.get('description') or '')
+    lines = ['<link rel="canonical" href="%s%s">' % (SITE_URL, path),
+             '<meta property="og:title" content="%s">'
+             % htmlmod.escape(str(title), quote=True)]
+    if desc:
+        lines.append('<meta property="og:description" content="%s">'
+                     % htmlmod.escape(str(desc), quote=True))
+    lines.append('<meta property="og:type" content="%s">' % og_type)
+    lines.append('<meta property="og:url" content="%s%s">' % (SITE_URL, path))
+    if og_image:
+        img_abs = og_image if og_image.startswith('http') else SITE_URL + og_image
+        lines.append('<meta property="og:image" content="%s">'
+                     % htmlmod.escape(img_abs, quote=True))
+    lines.append('<meta name="twitter:card" content="summary_large_image">')
+    lines.append('<meta name="twitter:title" content="%s">'
+                 % htmlmod.escape(str(title), quote=True))
+    if desc:
+        lines.append('<meta name="twitter:description" content="%s">'
+                     % htmlmod.escape(str(desc), quote=True))
+    if og_image:
+        lines.append('<meta name="twitter:image" content="%s">'
+                     % htmlmod.escape(img_abs, quote=True))
+    block = '\n'.join(lines) + '\n'
+    return html.replace('</head>', block + '</head>', 1)
+
+
 def apply_meta(html, data):
     """Apply SEO title / meta description / OG tags from a content dict."""
     if not data:
@@ -470,6 +535,188 @@ def apply_meta(html, data):
 
 
 # ----------------------------------------------------------------------------
+# Structured data (JSON-LD schema) — generated from CMS content on every build,
+# so edits to titles, descriptions, services, posts, contact info, or social
+# links flow into the schema automatically. Replaces any existing block so
+# rebuilds never duplicate it.
+# ----------------------------------------------------------------------------
+
+# Placeholder social URLs from the template — never ship these as sameAs.
+_SOCIAL_PLACEHOLDERS = (
+    'facebook.com/facebook', 'instagram.com/instagram',
+    'youtube.com/youtube',
+)
+
+def _abs_url(path):
+    if not path:
+        return None
+    return path if path.startswith('http') else SITE_URL + path
+
+def _org_node(sdata):
+    org_id = SITE_URL + '/#organization'
+    org = {
+        '@type': 'Organization',
+        '@id': org_id,
+        'name': sdata.get('site_name') or 'ViTalRank',
+        'url': SITE_URL + '/',
+    }
+    if sdata.get('tagline'):
+        org['description'] = sdata['tagline']
+    logo = _abs_url(sdata.get('logo'))
+    if logo:
+        org['logo'] = logo
+    same_as = [s.get('url') for s in (sdata.get('social') or [])
+               if s.get('url') and not any(p in s['url'] for p in _SOCIAL_PLACEHOLDERS)
+               and s['url'].rstrip('/') not in ('https://twitter.com', 'http://twitter.com')]
+    if same_as:
+        org['sameAs'] = same_as
+    contact = {}
+    for item in (sdata.get('contact_info') or []):
+        label = str(item.get('label', '')).lower()
+        href = str(item.get('href', '') or '')
+        text = str(item.get('text', '') or '')
+        if 'mail' in label and href.startswith('mailto:'):
+            contact['email'] = href[len('mailto:'):]
+        elif 'phone' in label or 'tel' in label:
+            contact['telephone'] = text or href.replace('tel:', '')
+    if contact:
+        contact['@type'] = 'ContactPoint'
+        contact['contactType'] = 'customer service'
+        org['contactPoint'] = contact
+    return org
+
+def _service_list():
+    """All services with built pages: (slug, title, description, image)."""
+    out = []
+    for md_path in sorted(glob.glob(os.path.join(ROOT, 'content', 'services', '*.md'))):
+        slug = os.path.splitext(os.path.basename(md_path))[0]
+        if not os.path.exists(os.path.join(ROOT, 'services', slug, 'index.html')):
+            continue
+        fm, _ = load_service_md(md_path)
+        out.append((slug, fm.get('title', slug),
+                    fm.get('meta_description', ''), fm.get('image')))
+    return out
+
+def build_jsonld(kind, page_data, sdata, extra=None):
+    extra = extra or {}
+    org = _org_node(sdata)
+    org_id = org['@id']
+    path = extra.get('path', '/')
+    page_url = SITE_URL + path
+    nodes = [org]
+    if kind == 'home':
+        nodes.append({
+            '@type': 'WebSite', '@id': SITE_URL + '/#website',
+            'url': SITE_URL + '/', 'name': org['name'],
+            'publisher': {'@id': org_id},
+        })
+    webpage = {
+        '@type': {
+            'home': 'WebPage', 'about': 'AboutPage', 'services': 'CollectionPage',
+            'service': 'WebPage', 'contact': 'ContactPage',
+            'blog': 'Blog', 'post': 'BlogPosting',
+        }[kind],
+        '@id': page_url + '#webpage',
+        'url': page_url,
+        'name': page_data.get('seo_title') or page_data.get('title') or org['name'],
+        'isPartOf': {'@id': SITE_URL + '/#website'} if kind == 'home' else {'@id': org_id},
+    }
+    if page_data.get('meta_description') or page_data.get('description'):
+        webpage['description'] = page_data.get('meta_description') or page_data.get('description')
+    if kind != 'post':
+        # posts get their BlogPosting node from the dedicated branch below
+        nodes.append(webpage)
+    if kind != 'home':
+        # BreadcrumbList on every public page except the homepage; crumbs
+        # reflect the page's real path. No fake data — names come from the
+        # page's own content.
+        crumbs = [('Home', '/')]
+        if kind in ('services', 'service'):
+            crumbs.append(('Services', '/services/'))
+        elif kind in ('blog', 'post'):
+            crumbs.append(('Blog', '/blog/'))
+        if kind == 'about':
+            crumbs.append(('About', extra.get('path', '/about-us/')))
+        elif kind == 'contact':
+            crumbs.append(('Contact', extra.get('path', '/contact/')))
+        elif kind == 'service':
+            crumbs.append((page_data.get('title') or 'Service',
+                           extra.get('path', '/')))
+        elif kind == 'post':
+            crumbs.append((extra.get('fm', {}).get('title') or 'Post',
+                           extra.get('path', '/')))
+        nodes.append({
+            '@type': 'BreadcrumbList',
+            'itemListElement': [
+                {'@type': 'ListItem', 'position': i + 1, 'name': name,
+                 'item': SITE_URL + url_path}
+                for i, (name, url_path) in enumerate(crumbs)
+            ],
+        })
+    if kind == 'services':
+        nodes.append({
+            '@type': 'ItemList',
+            'itemListElement': [
+                {'@type': 'ListItem', 'position': i + 1,
+                 'item': {'@type': 'Service', '@id': SITE_URL + '/services/%s/#service' % slug,
+                          'name': title, 'url': SITE_URL + '/services/%s/' % slug}}
+                for i, (slug, title, _, _) in enumerate(_service_list())
+            ],
+        })
+    elif kind == 'service':
+        svc = {'@type': 'Service', '@id': page_url + '#service',
+               'name': page_data.get('title'), 'url': page_url,
+               'provider': {'@id': org_id}}
+        if page_data.get('meta_description'):
+            svc['description'] = page_data['meta_description']
+        img = _abs_url(page_data.get('image'))
+        if img:
+            svc['image'] = img
+        nodes.append(svc)
+    elif kind == 'blog':
+        nodes.append({
+            '@type': 'ItemList',
+            'itemListElement': [
+                {'@type': 'ListItem', 'position': i + 1,
+                 'item': {'@type': 'BlogPosting',
+                          '@id': SITE_URL + '/blog/%s/#article' % fm['slug'],
+                          'headline': fm.get('title'),
+                          'url': SITE_URL + '/blog/%s/' % fm['slug'],
+                          'datePublished': fm.get('date')}}
+                for i, fm in enumerate(extra.get('posts', []))
+            ],
+        })
+    elif kind == 'post':
+        fm = extra.get('fm', {})
+        article = {'@type': 'BlogPosting', '@id': page_url + '#article',
+                   'headline': fm.get('title'), 'url': page_url,
+                   'author': {'@id': org_id}, 'publisher': {'@id': org_id}}
+        if fm.get('description'):
+            article['description'] = fm['description']
+        if fm.get('date'):
+            article['datePublished'] = fm['date']
+        src = fm.get('_src')
+        if src and os.path.exists(src):
+            article['dateModified'] = date.fromtimestamp(os.path.getmtime(src)).isoformat()
+        img = _abs_url(fm.get('image'))
+        if img:
+            article['image'] = img
+        nodes.append(article)
+    return {'@context': 'https://schema.org', '@graph': nodes}
+
+def apply_schema(html, kind, page_data, sdata, extra=None):
+    tag = ('<script type="application/ld+json">\n'
+           + json.dumps(build_jsonld(kind, page_data, sdata, extra), indent=2)
+           + '\n</script>')
+    if '<script type="application/ld+json">' in html:
+        html = re.sub(r'<script type="application/ld\+json">.*?</script>',
+                      lambda m: tag, html, flags=re.S)
+    else:
+        html = html.replace('</head>', tag + '\n</head>', 1)
+    return html
+
+
+# ----------------------------------------------------------------------------
 # Frontmatter
 # ----------------------------------------------------------------------------
 def parse_post(path):
@@ -486,6 +733,7 @@ def parse_post(path):
     fm['body_md'] = m.group(2)
     fm['slug'] = fm.get('slug') or os.path.splitext(os.path.basename(path))[0]
     fm['date_obj'] = datetime.strptime(fm['date'], '%Y-%m-%d').date()
+    fm['_src'] = path
     return fm
 
 def display_date(d):
@@ -532,6 +780,92 @@ PAGE_MAP = {
     'contact/index.html': 'content/pages/contact.yml',
 }
 
+PAGE_KIND = {
+    'index.html': 'home',
+    'about-us/index.html': 'about',
+    'services/index.html': 'services',
+    'contact/index.html': 'contact',
+}
+
+def _url_path(rel):
+    return '/' if rel == 'index.html' else '/' + rel[:-len('/index.html')] + '/'
+
+# Base URL used for sitemap.xml, canonicals, and share tags.
+# TODO: switch to the real domain (e.g. https://vitalrankdigital.com) once connected.
+SITE_URL = 'https://www.vitalrankdigital.com'
+
+def build_sitemap(posts):
+    """Regenerate the sitemap set Yoast-style: sitemap.xml is an index that
+    points at one child sitemap per content type (page / service / post),
+    each derived from the same sources the build uses, so any new or removed
+    page is reflected automatically on the next build."""
+    groups = {'page': [], 'service': [], 'post': []}
+    def add(group, url_path, src_path, priority, changefreq):
+        if src_path and os.path.exists(src_path):
+            lastmod = date.fromtimestamp(os.path.getmtime(src_path)).isoformat()
+        else:
+            lastmod = date.today().isoformat()
+        groups[group].append((url_path, lastmod, priority, changefreq))
+    for rel, content_path in PAGE_MAP.items():
+        url_path = '/' if rel == 'index.html' else '/' + rel[:-len('/index.html')] + '/'
+        add('page', url_path, os.path.join(ROOT, content_path),
+            '1.0' if rel == 'index.html' else '0.8', 'weekly')
+    add('page', '/blog/', os.path.join(ROOT, 'content', 'pages', 'blog.yml'),
+        '0.7', 'weekly')
+    for md_path in sorted(glob.glob(os.path.join(ROOT, 'content', 'services', '*.md'))):
+        slug = os.path.splitext(os.path.basename(md_path))[0]
+        if os.path.exists(os.path.join(ROOT, 'services', slug, 'index.html')):
+            add('service', '/services/%s/' % slug, md_path, '0.8', 'monthly')
+    for fm in posts:
+        add('post', '/blog/%s/' % fm['slug'], fm.get('_src'), '0.6', 'monthly')
+
+    def urlset(entries):
+        lines = ['<?xml version="1.0" encoding="UTF-8"?>',
+                 '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
+        for url_path, lastmod, priority, changefreq in entries:
+            lines.append('  <url>')
+            lines.append('    <loc>%s%s</loc>' % (SITE_URL, url_path))
+            lines.append('    <lastmod>%s</lastmod>' % lastmod)
+            lines.append('    <changefreq>%s</changefreq>' % changefreq)
+            lines.append('    <priority>%s</priority>' % priority)
+            lines.append('  </url>')
+        lines.append('</urlset>')
+        return '\n'.join(lines) + '\n'
+
+    total = 0
+    children = []
+    for group in ('page', 'service', 'post'):
+        entries = groups[group]
+        if not entries:
+            continue
+        fname = '%s-sitemap.xml' % group
+        open(os.path.join(ROOT, fname), 'w', encoding='utf-8').write(urlset(entries))
+        children.append((fname, max(e[1] for e in entries)))
+        total += len(entries)
+        print('wrote %s (%d urls)' % (fname, len(entries)))
+    lines = ['<?xml version="1.0" encoding="UTF-8"?>',
+             '<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
+    for fname, lastmod in children:
+        lines.append('  <sitemap>')
+        lines.append('    <loc>%s/%s</loc>' % (SITE_URL, fname))
+        lines.append('    <lastmod>%s</lastmod>' % lastmod)
+        lines.append('  </sitemap>')
+    lines.append('</sitemapindex>')
+    open(os.path.join(ROOT, 'sitemap.xml'), 'w', encoding='utf-8').write(
+        '\n'.join(lines) + '\n')
+    print('wrote sitemap.xml (index, %d urls total)' % total)
+    # keep robots.txt pointing at the sitemap
+    robots_path = os.path.join(ROOT, 'robots.txt')
+    sitemap_line = 'Sitemap: %s/sitemap.xml' % SITE_URL
+    if os.path.exists(robots_path):
+        robots = open(robots_path, encoding='utf-8').read()
+        if 'Sitemap:' in robots:
+            robots = re.sub(r'^Sitemap:.*$', sitemap_line, robots, flags=re.M)
+        else:
+            robots = robots.rstrip('\n') + '\n\n' + sitemap_line + '\n'
+        open(robots_path, 'w', encoding='utf-8').write(robots)
+        print('updated robots.txt')
+
 def build_page(rel, content_path, sdata, posts):
     html_path = os.path.join(ROOT, rel)
     if not os.path.exists(html_path):
@@ -541,6 +875,10 @@ def build_page(rel, content_path, sdata, posts):
     html = inject_chrome(html, sdata, posts)
     html = apply_markers(html, page_data, sdata, posts)
     html = apply_meta(html, page_data)
+    html = apply_schema(html, PAGE_KIND[rel], page_data, sdata,
+                        {'path': _url_path(rel), 'posts': posts})
+    html = apply_head_tags(html, _url_path(rel), page_data,
+                           og_image=page_data.get('hero_image'), og_type='website')
     open(html_path, 'w', encoding='utf-8').write(html)
     print('built %s' % rel)
 
@@ -556,6 +894,10 @@ def build_service(md_path, sdata, posts):
     html = inject_chrome(html, sdata, posts)
     html = apply_markers(html, page_data, sdata, posts)
     html = apply_meta(html, fm)
+    html = apply_schema(html, 'service', page_data, sdata,
+                        {'path': '/services/%s/' % slug})
+    html = apply_head_tags(html, '/services/%s/' % slug, fm,
+                           og_image=fm.get('image'), og_type='website')
     open(html_path, 'w', encoding='utf-8').write(html)
     print('built services/%s/' % slug)
 
@@ -578,14 +920,25 @@ def main():
         d = os.path.join(ROOT, 'blog', fm['slug'])
         os.makedirs(d, exist_ok=True)
         html = apply_markers(inject_chrome(render_post(fm), sdata, posts), dict(fm), sdata, posts)
+        html = apply_schema(html, 'post', dict(fm), sdata,
+                            {'path': '/blog/%s/' % fm['slug'], 'fm': fm})
+        html = apply_head_tags(html, '/blog/%s/' % fm['slug'], dict(fm),
+                               og_image=fm.get('image'), og_type='article')
         open(os.path.join(d, 'index.html'), 'w', encoding='utf-8').write(html)
         print('wrote blog/%s/index.html' % fm['slug'])
 
     blog_data = load_yaml_file(os.path.join(ROOT, 'content', 'pages', 'blog.yml'))
+    home_data = load_yaml_file(os.path.join(ROOT, 'content', 'pages', 'home.yml'))
     html = apply_markers(inject_chrome(render_index(posts), sdata, posts), blog_data, sdata, posts)
     html = apply_meta(html, blog_data)
+    html = apply_schema(html, 'blog', blog_data, sdata,
+                        {'path': '/blog/', 'posts': posts})
+    html = apply_head_tags(html, '/blog/', blog_data,
+                           og_image=home_data.get('hero_image'), og_type='website')
     open(os.path.join(ROOT, 'blog', 'index.html'), 'w', encoding='utf-8').write(html)
     print('wrote blog/index.html (%d posts)' % len(posts))
+
+    build_sitemap(posts)
 
 if __name__ == '__main__':
     main()

@@ -10,6 +10,79 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://www.vitalrankdigital.com/#organization",
+      "name": "ViTalRank",
+      "url": "https://www.vitalrankdigital.com/",
+      "description": "AI-Driven SEO & Digital Services",
+      "logo": "https://www.vitalrankdigital.com/assets/logo.svg",
+      "contactPoint": {
+        "email": "vishesh@vitalrankdigital.com",
+        "@type": "ContactPoint",
+        "contactType": "customer service"
+      }
+    },
+    {
+      "@type": "Blog",
+      "@id": "https://www.vitalrankdigital.com/blog/#webpage",
+      "url": "https://www.vitalrankdigital.com/blog/",
+      "name": "Blog | ViTalRank | AI-Driven SEO & Digital Services",
+      "isPartOf": {
+        "@id": "https://www.vitalrankdigital.com/#organization"
+      },
+      "description": "Explore insights from the ViTalRank team \u2014 SEO best practices, strategy, and digital growth topics."
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://www.vitalrankdigital.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "https://www.vitalrankdigital.com/blog/"
+        }
+      ]
+    },
+    {
+      "@type": "ItemList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "item": {
+            "@type": "BlogPosting",
+            "@id": "https://www.vitalrankdigital.com/blog/creating-a-culture-of-consistent-learning-and-growth/#article",
+            "headline": "Creating a culture of consistent learning and growth",
+            "url": "https://www.vitalrankdigital.com/blog/creating-a-culture-of-consistent-learning-and-growth/",
+            "datePublished": "2022-01-12"
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+<link rel="canonical" href="https://www.vitalrankdigital.com/blog/">
+<meta property="og:title" content="Blog | ViTalRank">
+<meta property="og:description" content="SEO insights, strategy, and digital growth topics from the ViTalRank team.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.vitalrankdigital.com/blog/">
+<meta property="og:image" content="https://www.vitalrankdigital.com/assets/img/home-hero-blur.webp">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Blog | ViTalRank">
+<meta name="twitter:description" content="SEO insights, strategy, and digital growth topics from the ViTalRank team.">
+<meta name="twitter:image" content="https://www.vitalrankdigital.com/assets/img/home-hero-blur.webp">
 </head>
 <body>
 
@@ -22,6 +95,7 @@
       <a href="/about-us/"><!-- cms:s:site.nav_about -->About<!-- /cms --></a>
       <a href="/services/"><!-- cms:s:site.nav_services -->Services<!-- /cms --></a>
       <a href="/blog/"><!-- cms:s:site.nav_blog -->Blog<!-- /cms --></a>
+      <a href="/contact/" class="nav-contact-link"><!-- cms:s:site.nav_contact -->Contact<!-- /cms --></a>
     </nav>
     <a class="btn btn-outline-d" href="/contact/"><!-- cms:s:site.nav_contact -->Contact<!-- /cms --></a>
     <button class="nav-toggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
@@ -36,35 +110,10 @@
     <h2 class="reveal" style="font-size:clamp(22px,2.6vw,30px);font-weight:600;margin-bottom:14px"><!-- cms:h:blog_subtitle -->Explore insights<br>and stay ahead<!-- /cms --></h2>
     <p class="lead reveal"><!-- cms:mi:blog_lead -->Our blog features insights from our team of consultants, who share their best practices on a wide range of topics.<!-- /cms --></p>
     <div class="blog-list" style="text-align:left">
-      <a class="blog-card reveal" href="/blog/the-power-of-strategic-planning-a-roadmap-to-success/">
-        <img src="/assets/img/blog-card-strategic-planning.jpg" alt="Team planning meeting">
-        <span class="date-pill">Apr 8, 2022</span>
-        <span class="card-title">The power of strategic planning: a roadmap to success</span>
-      </a>
-      <a class="blog-card reveal" href="/blog/the-importance-of-good-leadership-in-a-growing-business/">
-        <img src="/assets/img/blog-card-leadership.jpg" alt="Hands over a laptop in a dark office">
-        <span class="date-pill">Mar 15, 2022</span>
-        <span class="card-title">The importance of good leadership in a growing business</span>
-      </a>
-      <a class="blog-card reveal" href="/blog/unlocking-growth-strategies-for-scaling-your-business/">
-        <img src="/assets/img/blog-card-scaling.jpg" alt="Team meeting around a table">
-        <span class="date-pill">Feb 28, 2022</span>
-        <span class="card-title">Unlocking growth: strategies for scaling your business</span>
-      </a>
-      <a class="blog-card reveal" href="/blog/navigating-change-strategies-for-successful-changes/">
-        <img src="/assets/img/blog-card-navigating-change.jpg" alt="Navigating business change">
-        <span class="date-pill">Feb 6, 2022</span>
-        <span class="card-title">Navigating change: strategies for successful changes</span>
-      </a>
       <a class="blog-card reveal" href="/blog/creating-a-culture-of-consistent-learning-and-growth/">
         <img src="/assets/img/blog-card-learning-culture.jpg" alt="Team learning and growth session">
         <span class="date-pill">Jan 12, 2022</span>
         <span class="card-title">Creating a culture of consistent learning and growth</span>
-      </a>
-      <a class="blog-card reveal" href="/blog/the-role-of-technology-in-crafting-customer-experience/">
-        <img src="/assets/img/blog-card-technology-cx.jpg" alt="Technology shaping customer experience">
-        <span class="date-pill">Jan 12, 2022</span>
-        <span class="card-title">The role of technology in crafting customer experience</span>
       </a>
     </div>
   </div>
@@ -106,17 +155,19 @@
 <template>
 <a href="{{url}}">{{label}}</a>
 </template><a href="/blog/">Blog</a>
-<a href="/contact/">Contact</a>
-<a href="/404/">404</a><!-- /cms -->
+<a href="/contact/">Contact</a><!-- /cms -->
 </div>
         <div class="footer-col">
 <h4><!-- cms:s:site.footer_col3_title -->Services<!-- /cms --></h4>
 <!-- cms:list:site.footer_col3 -->
 <template>
 <a href="{{url}}">{{label}}</a>
-</template><a href="/services/seo-consulting-services/">Market research</a>
-<a href="/services/technical-seo-services/">Strategic planning</a>
-<a href="/services/enterprise-seo-services-for-large-sites/">Financial advisory</a><!-- /cms -->
+</template><a href="/services/seo-consulting-services/">SEO Consulting Services for Growth</a>
+<a href="/services/technical-seo-services/">Technical SEO Services &amp; Audits</a>
+<a href="/services/enterprise-seo-services-for-large-sites/">Enterprise SEO Services for Large Sites</a>
+<a href="/services/local-seo-services/">Local SEO Services for Businesses</a>
+<a href="/services/ecommerce-seo-services/">Ecommerce SEO Services That Convert</a>
+<a href="/services/b2b-seo-services/">B2B SEO Services &amp; Consulting</a><!-- /cms -->
 </div>
       </div>
       <div class="footer-bottom">
@@ -125,7 +176,7 @@
 <!-- cms:list:site.contact_info -->
 <template>
 <span class="fc-item"><span class="fc-label">{{label}}:</span> {{text}}</span>
-</template><!-- /cms -->
+</template><span class="fc-item"><span class="fc-label">Email:</span> vishesh@vitalrankdigital.com</span><!-- /cms -->
         </div>
       </div>
     </footer>

@@ -10,6 +10,75 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://www.vitalrankdigital.com/#organization",
+      "name": "ViTalRank",
+      "url": "https://www.vitalrankdigital.com/",
+      "description": "AI-Driven SEO & Digital Services",
+      "logo": "https://www.vitalrankdigital.com/assets/logo.svg",
+      "contactPoint": {
+        "email": "vishesh@vitalrankdigital.com",
+        "@type": "ContactPoint",
+        "contactType": "customer service"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://www.vitalrankdigital.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "https://www.vitalrankdigital.com/blog/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Creating a culture of consistent learning and growth",
+          "item": "https://www.vitalrankdigital.com/blog/creating-a-culture-of-consistent-learning-and-growth/"
+        }
+      ]
+    },
+    {
+      "@type": "BlogPosting",
+      "@id": "https://www.vitalrankdigital.com/blog/creating-a-culture-of-consistent-learning-and-growth/#article",
+      "headline": "Creating a culture of consistent learning and growth",
+      "url": "https://www.vitalrankdigital.com/blog/creating-a-culture-of-consistent-learning-and-growth/",
+      "author": {
+        "@id": "https://www.vitalrankdigital.com/#organization"
+      },
+      "publisher": {
+        "@id": "https://www.vitalrankdigital.com/#organization"
+      },
+      "description": "Discover how to build a culture of continuous learning that empowers employees and drives organizational innovation.",
+      "datePublished": "2022-01-12",
+      "dateModified": "2026-09-17",
+      "image": "https://www.vitalrankdigital.com/assets/img/blog-card-learning-culture.jpg"
+    }
+  ]
+}
+</script>
+<link rel="canonical" href="https://www.vitalrankdigital.com/blog/creating-a-culture-of-consistent-learning-and-growth/">
+<meta property="og:title" content="Creating a culture of consistent learning and growth">
+<meta property="og:description" content="Discover how to build a culture of continuous learning that empowers employees and drives organizational innovation.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://www.vitalrankdigital.com/blog/creating-a-culture-of-consistent-learning-and-growth/">
+<meta property="og:image" content="https://www.vitalrankdigital.com/assets/img/blog-card-learning-culture.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Creating a culture of consistent learning and growth">
+<meta name="twitter:description" content="Discover how to build a culture of continuous learning that empowers employees and drives organizational innovation.">
+<meta name="twitter:image" content="https://www.vitalrankdigital.com/assets/img/blog-card-learning-culture.jpg">
 </head>
 <body>
 
@@ -22,6 +91,7 @@
       <a href="/about-us/"><!-- cms:s:site.nav_about -->About<!-- /cms --></a>
       <a href="/services/"><!-- cms:s:site.nav_services -->Services<!-- /cms --></a>
       <a href="/blog/"><!-- cms:s:site.nav_blog -->Blog<!-- /cms --></a>
+      <a href="/contact/" class="nav-contact-link"><!-- cms:s:site.nav_contact -->Contact<!-- /cms --></a>
     </nav>
     <a class="btn btn-outline-d" href="/contact/"><!-- cms:s:site.nav_contact -->Contact<!-- /cms --></a>
     <button class="nav-toggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
@@ -94,17 +164,19 @@
 <template>
 <a href="{{url}}">{{label}}</a>
 </template><a href="/blog/">Blog</a>
-<a href="/contact/">Contact</a>
-<a href="/404/">404</a><!-- /cms -->
+<a href="/contact/">Contact</a><!-- /cms -->
 </div>
         <div class="footer-col">
 <h4><!-- cms:s:site.footer_col3_title -->Services<!-- /cms --></h4>
 <!-- cms:list:site.footer_col3 -->
 <template>
 <a href="{{url}}">{{label}}</a>
-</template><a href="/services/seo-consulting-services/">Market research</a>
-<a href="/services/technical-seo-services/">Strategic planning</a>
-<a href="/services/enterprise-seo-services-for-large-sites/">Financial advisory</a><!-- /cms -->
+</template><a href="/services/seo-consulting-services/">SEO Consulting Services for Growth</a>
+<a href="/services/technical-seo-services/">Technical SEO Services &amp; Audits</a>
+<a href="/services/enterprise-seo-services-for-large-sites/">Enterprise SEO Services for Large Sites</a>
+<a href="/services/local-seo-services/">Local SEO Services for Businesses</a>
+<a href="/services/ecommerce-seo-services/">Ecommerce SEO Services That Convert</a>
+<a href="/services/b2b-seo-services/">B2B SEO Services &amp; Consulting</a><!-- /cms -->
 </div>
       </div>
       <div class="footer-bottom">
@@ -113,7 +185,7 @@
 <!-- cms:list:site.contact_info -->
 <template>
 <span class="fc-item"><span class="fc-label">{{label}}:</span> {{text}}</span>
-</template><!-- /cms -->
+</template><span class="fc-item"><span class="fc-label">Email:</span> vishesh@vitalrankdigital.com</span><!-- /cms -->
         </div>
       </div>
     </footer>

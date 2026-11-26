@@ -10,13 +10,65 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://www.vitalrankdigital.com/#organization",
+      "name": "ViTalRank",
+      "url": "https://www.vitalrankdigital.com/",
+      "description": "AI-Driven SEO & Digital Services",
+      "logo": "https://www.vitalrankdigital.com/assets/logo.svg",
+      "contactPoint": {
+        "email": "vishesh@vitalrankdigital.com",
+        "@type": "ContactPoint",
+        "contactType": "customer service"
+      }
+    },
+    {
+      "@type": "ContactPage",
+      "@id": "https://www.vitalrankdigital.com/contact/#webpage",
+      "url": "https://www.vitalrankdigital.com/contact/",
+      "name": "Contact | ViTalRank | AI-Driven SEO & Digital Services",
+      "isPartOf": {
+        "@id": "https://www.vitalrankdigital.com/#organization"
+      },
+      "description": "Contact ViTalRank \u2014 request an audit, a personalized service, or guidance on where to start with SEO."
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://www.vitalrankdigital.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Contact",
+          "item": "https://www.vitalrankdigital.com/contact/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+<link rel="canonical" href="https://www.vitalrankdigital.com/contact/">
+<meta property="og:title" content="Contact | ViTalRank">
+<meta property="og:description" content="Contact ViTalRank — request an audit or personalized SEO service.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.vitalrankdigital.com/contact/">
+<meta property="og:image" content="https://www.vitalrankdigital.com/assets/img/contact-hero.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Contact | ViTalRank">
+<meta name="twitter:description" content="Contact ViTalRank — request an audit or personalized SEO service.">
+<meta name="twitter:image" content="https://www.vitalrankdigital.com/assets/img/contact-hero.jpg">
 </head>
 <body>
-
-
-
-
-
 <header class="site-header">
   <div class="header-bar">
     <a class="logo" href="/" aria-label="ViTalRank — home"><!-- cms:img:site.logo --><img src="/assets/logo.svg" alt="ViTalRank" width="176" height="40"><!-- /cms --></a>
@@ -25,16 +77,12 @@
       <a href="/about-us/"><!-- cms:s:site.nav_about -->About<!-- /cms --></a>
       <a href="/services/"><!-- cms:s:site.nav_services -->Services<!-- /cms --></a>
       <a href="/blog/"><!-- cms:s:site.nav_blog -->Blog<!-- /cms --></a>
+      <a href="/contact/" class="nav-contact-link"><!-- cms:s:site.nav_contact -->Contact<!-- /cms --></a>
     </nav>
     <a class="btn btn-outline-d" href="/contact/"><!-- cms:s:site.nav_contact -->Contact<!-- /cms --></a>
     <button class="nav-toggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
   </div>
 </header>
-
-
-
-
-
 <section class="hero tall-dark" style="min-height:72svh">
   <!-- cms:img:hero_image --><img class="hero-bg" src="/assets/img/contact-hero.jpg" alt="Business meeting"><!-- /cms -->
   <div class="hero-inner">
@@ -55,26 +103,23 @@
 <!-- cms:list:site.contact_info -->
 <template>
 <div class="ci-row"><span class="ci-label">{{label}}</span><a href="{{href}}">{{text}}</a></div>
-</template><!-- /cms -->
+</template><div class="ci-row"><span class="ci-label">Email</span><a href="mailto:vishesh@vitalrankdigital.com">vishesh@vitalrankdigital.com</a></div><!-- /cms -->
     </div>
     <div class="form-card reveal" style="text-align:left">
-      <form id="contact-form" action="#" method="post">
+      <form id="contact-form" name="contact" method="post" action="/contact/" data-netlify="true" netlify-honeypot="bot-field">
+        <input type="hidden" name="form-name" value="contact">
+        <p style="display:none"><label>Don't fill this out: <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
         <div class="form-row">
-          <input type="text" name="name" placeholder="<!-- cms:s:form_name_ph -->Your name<!-- /cms -->" aria-label="Your name" required>
-          <input type="email" name="email" placeholder="<!-- cms:s:form_email_ph -->Your email<!-- /cms -->" aria-label="Your email" required>
+          <!-- cms:a:form_name_ph:placeholder --><input type="text" name="name" placeholder="Your name" aria-label="Your name" required><!-- /cms -->
+          <!-- cms:a:form_email_ph:placeholder --><input type="email" name="email" placeholder="Your email" aria-label="Your email" required><!-- /cms -->
         </div>
-        <textarea name="message" placeholder="<!-- cms:s:form_msg_ph -->How can we help?<!-- /cms -->" aria-label="How can we help?" required></textarea>
+        <!-- cms:a:form_msg_ph:placeholder --><textarea name="message" placeholder="How can we help?" aria-label="How can we help?" required></textarea><!-- /cms -->
         <p style="margin-top:24px"><button class="btn btn-solid" type="submit"><!-- cms:s:form_button -->Send message<!-- /cms --></button></p>
       </form>
-      <div class="form-note" id="form-note"><!-- cms:t:form_note -->Thanks for reaching out! This demo form isn’t connected to an inbox yet, so your message wasn’t sent.<!-- /cms --></div>
+      <div class="form-note" id="form-note"><!-- cms:t:form_note -->Thanks for reaching out! Your message has been sent — we'll get back to you soon.<!-- /cms --></div>
     </div>
   </div>
 </section>
-
-
-
-
-
 <div class="band" style="padding-bottom:24px">
   <section class="cta-band">
     <h2 class="reveal"><!-- cms:s:site.cta_title -->Ready to transform your business?<!-- /cms --></h2>
@@ -110,17 +155,19 @@
 <template>
 <a href="{{url}}">{{label}}</a>
 </template><a href="/blog/">Blog</a>
-<a href="/contact/">Contact</a>
-<a href="/404/">404</a><!-- /cms -->
+<a href="/contact/">Contact</a><!-- /cms -->
 </div>
         <div class="footer-col">
 <h4><!-- cms:s:site.footer_col3_title -->Services<!-- /cms --></h4>
 <!-- cms:list:site.footer_col3 -->
 <template>
 <a href="{{url}}">{{label}}</a>
-</template><a href="/services/seo-consulting-services/">Market research</a>
-<a href="/services/technical-seo-services/">Strategic planning</a>
-<a href="/services/enterprise-seo-services-for-large-sites/">Financial advisory</a><!-- /cms -->
+</template><a href="/services/seo-consulting-services/">SEO Consulting Services for Growth</a>
+<a href="/services/technical-seo-services/">Technical SEO Services &amp; Audits</a>
+<a href="/services/enterprise-seo-services-for-large-sites/">Enterprise SEO Services for Large Sites</a>
+<a href="/services/local-seo-services/">Local SEO Services for Businesses</a>
+<a href="/services/ecommerce-seo-services/">Ecommerce SEO Services That Convert</a>
+<a href="/services/b2b-seo-services/">B2B SEO Services &amp; Consulting</a><!-- /cms -->
 </div>
       </div>
       <div class="footer-bottom">
@@ -129,7 +176,7 @@
 <!-- cms:list:site.contact_info -->
 <template>
 <span class="fc-item"><span class="fc-label">{{label}}:</span> {{text}}</span>
-</template><!-- /cms -->
+</template><span class="fc-item"><span class="fc-label">Email:</span> vishesh@vitalrankdigital.com</span><!-- /cms -->
         </div>
       </div>
     </footer>
