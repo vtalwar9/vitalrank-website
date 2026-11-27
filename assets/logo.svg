@@ -1,9 +1,3 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 176 40" role="img" aria-label="ViTalRank">
-  <g fill="#3399FE">
-    <rect x="2" y="8" width="13" height="13" rx="3.5"/>
-    <rect x="17" y="8" width="13" height="13" rx="3.5"/>
-    <rect x="2" y="23" width="13" height="13" rx="3.5"/>
-    <rect x="17" y="23" width="13" height="13" rx="3.5"/>
-  </g>
-  <text x="38" y="28" font-family="Figtree, 'Segoe UI', sans-serif" font-weight="600" font-size="23" fill="#201F22" letter-spacing="-0.5">ViTalRank</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 -15 6184 855" role="img" aria-label="Vital Rank">
+<g transform="translate(0,825) scale(1,-1)"><path transform="translate(0,0)" fill="#0A1B3D" d="M282 0 8 700H181L369 193L555 700H729L456 0Z"/><path transform="translate(756,0)" fill="#0A1B3D" d="M68 0V700H229V0Z"/><path transform="translate(1073,0)" fill="#0A1B3D" d="M220 0V552H16V700H584V552H380V0Z"/><path transform="translate(1692,0)" fill="#3399FE" d="M0,0 L245,625 L366,815 L487,625 L732,0 L578,0 L366,400 L154,0 Z M218,148 L514,148 L514,244 L218,244 Z"/><path transform="translate(2444,0)" fill="#0A1B3D" d="M68 0V700H229V148H527V0Z"/><g transform="translate(3243,0)"><path transform="translate(0,0)" fill="#0A1B3D" d="M68 0V700H343Q419 700 478.0 670.5Q537 641 570.5 588.5Q604 536 604 468Q604 399 568.5 345.5Q533 292 474 264L632 0H448L314 235Q308 235 301.5 235.0Q295 235 289 235H229V0ZM229 383H338Q366 383 388.0 394.0Q410 405 422.5 424.5Q435 444 435 468Q435 505 407.5 529.0Q380 553 335 553H229Z"/><path transform="translate(674,0)" fill="#0A1B3D" d="M8 0 280 700H452L724 0H554L503 133H229L178 0ZM281 275H450L366 499Z"/><path transform="translate(1426,0)" fill="#0A1B3D" d="M68 0V700H237L544 273V700H705V0H544L229 439V0Z"/><path transform="translate(2219,0)" fill="#0A1B3D" d="M68 0V700H228V445L463 700H673L380 384L683 0H484L274 270L228 221V0Z"/></g></g>
 </svg>
